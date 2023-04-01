@@ -5,6 +5,7 @@
 const assert = require('assert');
 // brings in the readline module to access the command line
 const readline = require('readline');
+const { CLIENT_RENEG_LIMIT } = require('tls');
 // use the readline module to print out to the command line
 const rl = readline.createInterface({
   input: process.stdin,
@@ -13,8 +14,10 @@ const rl = readline.createInterface({
 
 // the function that will be called by the unit test below
 const rockPaperScissors = (hand1, hand2) => {
- let hand1 = hand1.toLowercase().trim();
- let hand2 = hand2.toLowercase().trim();
+ hand1 = hand1.toLowerCase().trim();
+ hand2 = hand2.toLowerCase().trim();
+//  console.log(hand1)
+//  console.log(hand2)
 
   if(hand1 === hand2){
     return "It's a tie!"
@@ -37,15 +40,7 @@ const rockPaperScissors = (hand1, hand2) => {
    else if (hand1 === 'paper' && hand2 === 'scissors') {
     return "Hand two wins!"
   }
-  else //(hand1 !==( 'paper' || 'rock' || 'scissors')) {
-    return "Invalid input"
-    // hand1 = hand1.toLowercase().trim();
 
-    // }
-  // else if (hand2 !==( 'paper' || 'rock' || 'scissors')){
-  //   return "Invalid input"
-    
-    // }
   }
 
  
@@ -60,14 +55,15 @@ const rockPaperScissors = (hand1, hand2) => {
 // to run the function use the command: node main.js
 // to close it ctrl + C
 function getPrompt() {
-  rl.question('hand1: ', (answer1) => {
-    rl.question('hand2: ', (answer2) => {
-      console.log( rockPaperScissors(answer1, answer2) );
-      getPrompt();
+  rl.question('hand1: ', (hand1) => {
+    rl.question('hand2: ', (hand2) => {
+      console.log( rockPaperScissors(hand1, hand2) );
+      console.log(hand1);
+      console.log(hand2);
     });
   });
 }
-
+getPrompt();
 // Unit Tests
 // to use them run the command: npm test main.js
 // to close them ctrl + C
